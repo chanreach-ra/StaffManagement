@@ -1,0 +1,51 @@
+name: Full Stack CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend-build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.x'
+
+      - name: Restore backend dependencies
+        run: dotnet restore 
+
+      - name: Build backend
+        run: dotnet build  --configuration Release
+
+      - name: Test backend
+        run: dotnet test  --configuration Release --no-build
+
+  frontend-build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Install frontend dependencies
+        run: npm install --prefix .staff-management-app
+
+      - name: Build frontend
+        run: npm run build --prefix .staff-management-app
+
+      # Add additional steps for frontend testing if needed
