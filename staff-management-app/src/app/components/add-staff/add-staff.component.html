@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="m-2">
+        <button mat-raised-button color="primary" [routerLink]="['']">Back to list</button>
+    </div>
+    <mat-card>
+        <form [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Staff ID</mat-label>
+                        <input matInput formControlName="staffID" placeholder="Staff ID">
+                        <mat-error *ngIf="staffForm.get('staffID')?.hasError('required')">Staff ID is
+                            required</mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-6">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Full Name</mat-label>
+                        <input matInput formControlName="fullName" placeholder="Full Name">
+                        <mat-error *ngIf="staffForm.get('fullName')?.hasError('required')">Full Name is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender" placeholder="Select Gender">
+                            <mat-option [value]="1">Male</mat-option>
+                            <mat-option [value]="2">Female</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="staffForm.get('gender')?.hasError('required')">Gender is required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-6">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Birthday</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="birthday" placeholder="Birthday">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="staffForm.get('birthday')?.hasError('required')">Birthday is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit" [disabled]="staffForm.invalid"
+                class="full-width">Submit</button>
+        </form>
+
+    </mat-card>
+</div>
